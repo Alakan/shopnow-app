@@ -1,0 +1,190 @@
+{
+  "info": {
+    "_postman_id": "shopnow-tp-ecommerce-demo",
+    "name": "ShopNow API — TP Stratégie de tests",
+    "description": "Collection utilisée pour les tests d'intégration API (Postman côté interface, Newman côté pipeline CI). Exécution : npx newman run ... --reporters cli,junit",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 · Lister les produits",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Statut 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Le catalogue est un tableau non vide\", function () { pm.expect(Array.isArray(body)).to.be.true; pm.expect(body.length).to.be.greaterThan(0); });",
+              "pm.test(\"Chaque produit possède un id\", function () { pm.expect(body[0].id).to.exist; });"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/produits",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "produits"]
+        }
+      }
+    },
+    {
+      "name": "2 · Créer un produit",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Statut 201\", function () { pm.response.to.have.status(201); });",
+              "const body = pm.response.json();",
+              "pm.test(\"L'id du produit est renvoyé\", function () { pm.expect(body.id).to.exist; });",
+              "pm.test(\"Le nom est écho\", function () { pm.expect(body.nom).to.eql('Produit Postman'); });",
+              "pm.environment.set(\"produitId\", body.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nom\": \"Produit Postman\",\n  \"description\": \"Créé via la collection du TP\",\n  \"categorie\": \"Test\",\n  \"prix\": 12.5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/produits",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "produits"]
+        }
+      }
+    },
+    {
+      "name": "3 · Créer une commande",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Statut 201\", function () { pm.response.to.have.status(201); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Statut d'ordre COMMANDE_CREEE\", function () { pm.expect(body.statut).to.eql('COMMANDE_CREEE'); });",
+              "pm.test(\"Le total est présent\", function () { pm.expect(body.total).to.exist; });",
+              "pm.environment.set(\"commandeId\", body.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"panier\": {\n    \"{{produitId}}\": 2\n  },\n  \"emailUtilisateur\": \"alice@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/commandes",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "commandes"]
+        }
+      }
+    },
+    {
+      "name": "4 · Consulter une commande",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Statut 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Le statut attendu est conservé\", function () { pm.expect(body.statut).to.eql('COMMANDE_CREEE'); });",
+              "pm.test(\"La commande contient des lignes\", function () { pm.expect(body.lignes.length).to.be.greaterThan(0); });"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/commandes/{{commandeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "commandes", "{{commandeId}}"]
+        }
+      }
+    },
+    {
+      "name": "5 · Payer une commande (simulation)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Statut 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Le statut passe à PAYEE\", function () { pm.expect(body.statut).to.eql('PAYEE'); });"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"numeroCarte\": \"4111111111111111\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/commandes/{{commandeId}}/paiement",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "commandes", "{{commandeId}}", "paiement"]
+        }
+      }
+    },
+    {
+      "name": "6 · Créer un compte",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Statut 201 (ou 200 si déjà inscrit)\", function () { pm.expect([201, 200]).to.include(pm.response.code); });",
+              "pm.test(\"L'email est renvoyé\", function () { pm.expect(pm.response.json().email).to.eql('alice@example.com'); });"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nom\": \"Alice\",\n  \"email\": \"alice@example.com\",\n  \"motDePasse\": \"demo1234\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/utilisateurs",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "utilisateurs"]
+        }
+      }
+    }
+  ],
+  "variable": []
+}

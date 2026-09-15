@@ -1,0 +1,22 @@
+# --- Maven / Java ---
+target/
+*.class
+*.jar
+!.mvn/wrapper/*.jar
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# --- Système ---
+.DS_Store
+Thumbs.db
+
+# --- Divers ---
+*.log
+.env
+node_modules/
