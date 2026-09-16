@@ -1,22 +1,33 @@
-# --- Maven / Java ---
-target/
-*.class
-*.jar
-!.mvn/wrapper/*.jar
+# Dependencies
+node_modules/
 
-# --- IDE ---
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
 .idea/
-*.iml
 .vscode/
-.settings/
-.classpath
-.project
+*.iml
 
-# --- Système ---
+# OS
 .DS_Store
 Thumbs.db
 
-# --- Divers ---
-*.log
-.env
-node_modules/
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build
+dist/
+build/
