@@ -38,6 +38,8 @@ npm run test:ui
 Le rapport est ensuite disponible dans `shopnow-app/reports/test-results.html`.
 Ouvrez ce fichier dans VS Code avec **Open with Live Server**, ou dans le navigateur,
 pour consulter une interface avec les tests réussis, les tests échoués et leur durée.
+Une version PDF prête à remettre est disponible dans
+[reports/rapport-tests-shopnow.pdf](reports/rapport-tests-shopnow.pdf).
 
 Dans le conteneur Linux, Chrome est exécuté sur un écran virtuel avec Xvfb. La fenêtre
 Chrome elle-même n'est pas visible, mais le rapport HTML fournit l'interface graphique
