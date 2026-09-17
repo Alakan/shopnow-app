@@ -132,6 +132,82 @@ La suite contient actuellement **19 tests E2E**, couvrant notamment :
 - **Organisation du code difficile à maintenir** : création des Page Objects
 	`LoginPage`, `ProductsPage` et `CartPage` pour centraliser les sélecteurs et actions.
 
+## Questions de synthèse
+
+### 1. Quel est le rôle de Selenium WebDriver ?
+
+Selenium WebDriver permet de piloter automatiquement un navigateur réel avec du
+code. Dans ce projet, il ouvre les pages ShopNow, clique sur les éléments, saisit
+des informations, attend les changements d'interface et vérifie les résultats
+comme le ferait un utilisateur.
+
+### 2. Qu'est-ce qu'un sélecteur ?
+
+Un sélecteur est une expression utilisée par Selenium pour identifier un élément
+HTML dans la page. Les tests utilisent par exemple des sélecteurs CSS comme
+`[data-testid="login-form"]`, `.product-card` ou `[data-action="increase"]`.
+
+### 3. Pourquoi utiliser `data-testid` ?
+
+`data-testid` fournit un identifiant stable et dédié aux tests. Il évite de
+dépendre de la structure visuelle, des classes CSS ou du texte affiché, qui peuvent
+changer pour des raisons de design sans modifier le comportement de l'application.
+
+### 4. Pourquoi utiliser des assertions ?
+
+Les assertions comparent le résultat observé avec le résultat attendu. Elles
+transforment une action automatisée en vérification : par exemple, elles confirment
+qu'une page est visible, qu'un utilisateur est connecté ou que le total du panier
+est correct.
+
+### 5. Pourquoi utiliser des attentes explicites ?
+
+Les attentes explicites permettent d'attendre une condition réelle, comme la
+présence d'un élément ou la mise à jour d'une quantité, avant de poursuivre. Elles
+rendent les tests plus fiables lorsque le chargement dépend du réseau, de l'API ou
+de la vitesse de la machine, contrairement à une pause fixe.
+
+### 6. Quelle différence entre un test fonctionnel et un test End-to-End ?
+
+Un test fonctionnel vérifie généralement une fonctionnalité précise, comme la
+connexion ou l'ajout d'un produit. Un test End-to-End vérifie un parcours complet
+à travers plusieurs pages et fonctionnalités, de la connexion jusqu'à la
+modification et la suppression d'un article dans le panier.
+
+### 7. Pourquoi réaliser des tests négatifs ?
+
+Les tests négatifs vérifient que l'application réagit correctement aux situations
+invalides ou interdites. Le test de connexion refusée confirme par exemple qu'un
+mot de passe incorrect n'ouvre pas de session et qu'un message d'erreur est affiché.
+Ils permettent de détecter les erreurs de validation et les comportements
+inattendus.
+
+### 8. Quel est l'intérêt du Page Object Model ?
+
+Le Page Object Model sépare le scénario de test des sélecteurs et des actions
+propres à chaque page. Les classes `LoginPage`, `ProductsPage` et `CartPage`
+centralisent ces éléments. Le code est ainsi plus lisible, réutilisable et plus
+facile à modifier si l'interface change.
+
+### 9. Quels problèmes avez-vous rencontrés pendant l'automatisation ?
+
+Les principales difficultés ont été l'absence d'interface graphique dans le
+conteneur Linux, le démarrage de Chrome sans affichage, la disponibilité variable
+du serveur et le chargement asynchrone des produits et du panier. Le rapport HTML
+ouvert directement affichait également une page blanche.
+
+### 10. Quels sont les avantages et les limites de Selenium ?
+
+Selenium permet de tester un navigateur réel, plusieurs navigateurs et des parcours
+utilisateur complets. Il s'appuie sur des sélecteurs et des assertions proches des
+actions réelles, ce qui est utile pour valider l'interface.
+
+Ses limites sont une exécution plus lente et plus fragile que des tests unitaires,
+la nécessité de gérer le navigateur et son environnement, ainsi que les problèmes
+liés aux délais de chargement. Dans un conteneur sans bureau, il faut aussi utiliser
+le mode headless, Xvfb ou un bureau distant, et les tests restent dépendants de la
+structure HTML de l'application.
+
 ## API
 `GET /api/products`
 `GET /api/products/:id`
