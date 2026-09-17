@@ -43,6 +43,9 @@ Dans le conteneur Linux, Chrome est exécuté sur un écran virtuel avec Xvfb. L
 Chrome elle-même n'est pas visible, mais le rapport HTML fournit l'interface graphique
 des résultats et les tests qui enregistrent des captures les placent dans `screenshots/`.
 
+Nom : BASTIDE
+Anthony : Anthony
+
 ## Installation et exécution du TP
 
 ### Installer le projet
