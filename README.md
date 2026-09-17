@@ -46,7 +46,7 @@ Chrome elle-même n'est pas visible, mais le rapport HTML fournit l'interface gr
 des résultats et les tests qui enregistrent des captures les placent dans `screenshots/`.
 
 Nom : BASTIDE
-Anthony : Anthony
+Prénom : Anthony
 
 ## Installation et exécution du TP
 
