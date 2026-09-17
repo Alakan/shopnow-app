@@ -208,6 +208,73 @@ liés aux délais de chargement. Dans un conteneur sans bureau, il faut aussi ut
 le mode headless, Xvfb ou un bureau distant, et les tests restent dépendants de la
 structure HTML de l'application.
 
+## Scénario End-to-End principal
+
+Le test [test14_parcours_complet.test.js](tests/e2e/test14_parcours_complet.test.js)
+simule le parcours complet d'un client :
+
+```text
+Connexion
+	↓
+Produits
+	↓
+Choix d'un produit
+	↓
+Détail
+	↓
+Ajout au panier
+	↓
+Quantité = 2
+	↓
+Vérification du total
+	↓
+Suppression
+	↓
+Panier vide
+```
+
+Ce test est automatisé avec Selenium WebDriver, utilise des sélecteurs CSS et des
+attentes explicites, et contient plus de cinq assertions. Il est reproductible car
+le panier est réinitialisé au début du scénario et le serveur est démarré
+automatiquement s'il n'est pas déjà disponible. Les actions sont organisées dans
+les Page Objects `LoginPage`, `ProductsPage` et `CartPage`.
+
+## Workflow du TP
+
+```text
+FORK
+ ↓
+CLONE
+ ↓
+npm install
+ ↓
+npm start
+ ↓
+Explorer ShopNow
+ ↓
+Inspecter les éléments
+ ↓
+Identifier les sélecteurs
+ ↓
+Installer Selenium
+ ↓
+Premier test
+ ↓
+Écrire les tests
+ ↓
+Tests négatifs
+ ↓
+Test E2E
+ ↓
+Page Object Model
+ ↓
+npm test
+ ↓
+COMMIT
+ ↓
+PUSH
+```
+
 ## API
 `GET /api/products`
 `GET /api/products/:id`
