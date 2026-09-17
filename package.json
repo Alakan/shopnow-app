@@ -2,6 +2,16 @@
   "name": "shopnow-js",
   "version": "1.0.0",
   "description": "Mini application e-commerce JavaScript pour TP Selenium INF243",
-  "scripts": {"start": "node server.js", "dev": "node --watch server.js"},
-  "dependencies": {"express": "^4.21.2"}
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "npm run test:ui",
+    "test:ui": "rm -rf reports && mkdir -p reports && xvfb-run -a -s \"-screen 0 1440x900x24\" mocha \"tests/e2e/*.test.js\" --reporter mochawesome --reporter-options reportDir=reports,reportFilename=test-results,html=true,json=false"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "mochawesome": "^8.1.1"
+  }
 }
